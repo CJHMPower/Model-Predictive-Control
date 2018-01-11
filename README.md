@@ -9,7 +9,7 @@ This repository is my Udacity Self-Driving Car Nanodegree Model Predictive Contr
 - **The Model**:
 The kinematic model includes the car's x, y coordinates, orientation angle (psi), and velocity, as well as the cross-track error and psi error (epsi).The model output is the acceleration rate and the steering angle. This model combines state update equations as below:
 
-![equations](./eqns.png)
+![equations](./equation.png)
 
 - **Timestep Length and Elapsed Duration (N & dt)**
 The value of N and dt I used are 10 and 0.1 respectively. I referred to the parameters suggested by in the Udacity class and it works well. I have also tried different values like 12 and 0.12, 20 and 0.2. The 10 and 0.1 pair tends to produce the best performance.
@@ -18,12 +18,8 @@ The value of N and dt I used are 10 and 0.1 respectively. I referred to the para
 The waypoints are preprocessed by transforming them to the vehicle's coordinates. This simplifies the process to fit a polynomial to the waypoints because the vehicle's x and y coordinates are now at the origin (0, 0) and the orientation angle is also zero. 
 
 - **Model Predictive Control with Latency**
-To deal with the Latency problem, I simply force the actuations to remain to be the previous value for the time of latency, as showed below.
+To deal with the Latency problem, I simply force the actuations to remain to be the previous value for the time of latency, as showed below (MPC.cpp lines 108-111).
 
-    if (t > 1) {   // use previous actuations (to account for latency)
-        a = vars[a_start + t - 2];
-        delta = vars[delta_start + t - 2];
-    }
 After address the latency problem, the model works well, free of bad oscilation.
 
 
